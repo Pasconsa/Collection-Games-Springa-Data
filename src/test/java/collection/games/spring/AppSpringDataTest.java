@@ -1,5 +1,6 @@
 package collection.games.spring;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -27,7 +28,7 @@ public class AppSpringDataTest {
 		consoles.setConsole("Super Nintendo");
 		consoles.setFabricante("Nintendo");
 		consoles.setGeracao("4");
-		consoles.setLancamento("1990");
+		consoles.setLancamento("1992");
 		consoles.setTipoMidia("Cartucho");
 
 		interfaceSpringDataUser.save(consoles);
@@ -62,7 +63,7 @@ public class AppSpringDataTest {
 		data.setConsole("Super Nintendo");
 		data.setFabricante("Nintendo");
 		data.setGeracao("4");
-		data.setLancamento("1990");
+		data.setLancamento("1992");
 		data.setTipoMidia("Cartucho");
 
 		interfaceSpringDataUser.save(data);
@@ -76,5 +77,38 @@ public class AppSpringDataTest {
 		
 		interfaceSpringDataUser.delete(consoles.get());
 	}
+	
+	
+	//Consulta por nome Query
+	@Test
+	public void testeConsultaNome() {
+		List<Consoles> list = interfaceSpringDataUser.buscaPorConsole("Super Nintendo");
+		
+		for(Consoles consoles :list){
+			System.out.println(consoles.getConsole());
+			System.out.println(consoles.getFabricante());
+			System.out.println(consoles.getGeracao());
+			System.out.println(consoles.getLancamento());
+			System.out.println(consoles.getTipoMidia());
+			System.out.println(consoles.getId());
+			System.out.println("------------------");
+			}
+		}
+	
 
+	//Consulta Query e parametros
+	
+	@Test
+	public void testeConsultaNomeParam() {
+		Consoles consoles = interfaceSpringDataUser.buscaPorConsoleParam("Super");
+		
+		System.out.println(consoles.getConsole());
+		System.out.println(consoles.getFabricante());
+		System.out.println(consoles.getGeracao());
+		System.out.println(consoles.getLancamento());
+		System.out.println(consoles.getTipoMidia());
+		System.out.println(consoles.getId());
+		System.out.println("------------------");
+	}
+	
 }
