@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import collection.games.spring.model.Consoles;
 
 @Repository
-public interface InterfaceStpringDataUser extends CrudRepository<Consoles, Long> {
+public interface InterfaceSpringDataUser extends CrudRepository<Consoles, Long> {
 
 }
