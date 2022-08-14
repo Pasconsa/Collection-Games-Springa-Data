@@ -111,4 +111,16 @@ public class AppSpringDataTest {
 		System.out.println("------------------");
 	}
 	
+	
+	//deletar por condição metodo @modYfing e @transaction
+	@Test
+	public void testeDeletePorLancamento() {
+		interfaceSpringDataUser.deletePorLancamento("1992");
+	}
+	
+	//update por condição atualizar lancamento se console chamar.
+	@Test
+	public void testeUpdateFabricantePorConsole() {
+		interfaceSpringDataUser.updateLancamentoPorConsole("1990", "Super Nintendo");
+	}
 }
