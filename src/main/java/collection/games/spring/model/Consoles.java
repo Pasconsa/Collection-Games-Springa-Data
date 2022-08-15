@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import org.hibernate.type.TrueFalseType;
 
 @Entity
 public class Consoles {
@@ -26,7 +25,6 @@ public class Consoles {
 	
 	@OneToMany(mappedBy = "consoles", orphanRemoval = true , fetch = FetchType.EAGER)
 	private List<Games>games;
-	
 	
 	
 	public List<Games> getGames() {

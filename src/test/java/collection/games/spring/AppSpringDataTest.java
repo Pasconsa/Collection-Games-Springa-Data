@@ -11,8 +11,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import collection.games.spring.dao.InterfaceConsoles;
 import collection.games.spring.dao.InterfaceGames;
+import collection.games.spring.dao.InterfaceQuantidades;
 import collection.games.spring.model.Consoles;
 import collection.games.spring.model.Games;
+import collection.games.spring.model.Quantidades;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:META-INF/spring-config.xml" })
@@ -24,17 +26,20 @@ public class AppSpringDataTest {
 	@Autowired
 	private InterfaceGames interfaceGames;
 
+	@Autowired
+	private InterfaceQuantidades interfaceQuantidades;
+
 	// Cadastrar
 	@Test
 	public void testeInsert() {
 
 		Consoles consoles = new Consoles();
 
-		consoles.setConsole("Playstation");
-		consoles.setFabricante("Sony");
-		consoles.setGeracao("5");
-		consoles.setLancamento("1994");
-		consoles.setTipoMidia("Cd");
+		consoles.setConsole("Atari 2600");
+		consoles.setFabricante("Atari");
+		consoles.setGeracao("2");
+		consoles.setLancamento("1977");
+		consoles.setTipoMidia("Cartucho");
 
 		interfaceConsoles.save(consoles);
 
@@ -144,25 +149,41 @@ public class AppSpringDataTest {
 	}
 
 	@Test
-		public void testeConsultarGames() {
+	public void testeConsultarGames() {
 
-			Optional<Consoles> consoles = interfaceConsoles.findById(7L);
+		Optional<Consoles> consoles = interfaceConsoles.findById(7L);
 
-			System.out.println(consoles.get().getConsole());
-			System.out.println(consoles.get().getFabricante());
-			System.out.println(consoles.get().getGeracao());
-			System.out.println(consoles.get().getLancamento());
-			System.out.println(consoles.get().getTipoMidia());
-			System.out.println(consoles.get().getId());
-			
-			for (Games games : consoles.get().getGames()) {
-				System.out.println(games.getAjogo());
-				System.out.println(games.getGenero());
-				System.out.println(games.getProdutora());
-				System.out.println(games.getAno());
-				System.out.println(games.getConsoles().getConsole());
-				System.out.println("----------------------------");
-			} 
+		System.out.println(consoles.get().getConsole());
+		System.out.println(consoles.get().getFabricante());
+		System.out.println(consoles.get().getGeracao());
+		System.out.println(consoles.get().getLancamento());
+		System.out.println(consoles.get().getTipoMidia());
+		System.out.println(consoles.get().getId());
+
+		for (Games games : consoles.get().getGames()) {
+			System.out.println(games.getAjogo());
+			System.out.println(games.getGenero());
+			System.out.println(games.getProdutora());
+			System.out.println(games.getAno());
+			System.out.println(games.getConsoles().getConsole());
+			System.out.println("----------------------------");
 		}
+	}
 
-}
+	// --------------------Gravar a consultar classe Quantidades------------------------------
+	@Test
+	public void testeGravaQuantidades() {
+
+		Optional<Consoles> consoles = interfaceConsoles.findById(8l);
+
+		Quantidades qtd = new Quantidades();
+		qtd.setQuantConsoles(3);
+		qtd.setQuantGames(100);
+		qtd.setQuantControles(12);
+		qtd.setConsoles(consoles.get());
+
+		interfaceQuantidades.save(qtd);
+	}
+
+
+	}

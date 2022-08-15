@@ -7,6 +7,7 @@
 
 		<class>collection.games.spring.model.Consoles</class>
 		<class>collection.games.spring.model.Games</class>
+		<class>collection.games.spring.model.Quantidades</class>
 
 	</persistence-unit>
 </persistence>
