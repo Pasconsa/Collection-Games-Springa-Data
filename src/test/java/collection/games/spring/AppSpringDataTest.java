@@ -9,15 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import collection.games.spring.dao.InterfaceSpringDataUser;
+import collection.games.spring.dao.InterfaceConsoles;
+import collection.games.spring.dao.InterfaceGames;
 import collection.games.spring.model.Consoles;
+import collection.games.spring.model.Games;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:META-INF/spring-config.xml" })
 public class AppSpringDataTest {
 
 	@Autowired
-	private InterfaceSpringDataUser interfaceSpringDataUser;
+	private InterfaceConsoles interfaceConsoles;
+
+	@Autowired
+	private InterfaceGames interfaceGames;
 
 	// Cadastrar
 	@Test
@@ -25,15 +30,15 @@ public class AppSpringDataTest {
 
 		Consoles consoles = new Consoles();
 
-		consoles.setConsole("Super Nintendo");
-		consoles.setFabricante("Nintendo");
-		consoles.setGeracao("4");
-		consoles.setLancamento("1992");
-		consoles.setTipoMidia("Cartucho");
+		consoles.setConsole("Playstation");
+		consoles.setFabricante("Sony");
+		consoles.setGeracao("5");
+		consoles.setLancamento("1994");
+		consoles.setTipoMidia("Cd");
 
-		interfaceSpringDataUser.save(consoles);
+		interfaceConsoles.save(consoles);
 
-		System.out.println("Usuario cadastrado = " + interfaceSpringDataUser.count());
+		System.out.println("Usuario cadastrado = " + interfaceConsoles.count());
 	}
 
 //Consultar
@@ -41,7 +46,7 @@ public class AppSpringDataTest {
 	@Test
 	public void testeConsultar() {
 
-		Optional<Consoles> consoles = interfaceSpringDataUser.findById(1L);
+		Optional<Consoles> consoles = interfaceConsoles.findById(6L);
 
 		System.out.println(consoles.get().getConsole());
 		System.out.println(consoles.get().getFabricante());
@@ -56,35 +61,34 @@ public class AppSpringDataTest {
 	@Test
 	public void testeAtualizar() {
 
-		Optional<Consoles> consoles = interfaceSpringDataUser.findById(1L);
-		
+		Optional<Consoles> consoles = interfaceConsoles.findById(6L);
+
 		Consoles data = consoles.get();
 
-		data.setConsole("Super Nintendo");
-		data.setFabricante("Nintendo");
-		data.setGeracao("4");
-		data.setLancamento("1992");
-		data.setTipoMidia("Cartucho");
+		data.setConsole("Dreamcast");
+		data.setFabricante("Sega");
+		data.setGeracao("6");
+		data.setLancamento("1998");
+		data.setTipoMidia("Gd");
 
-		interfaceSpringDataUser.save(data);
+		interfaceConsoles.save(data);
 
 	}
-	
+
 //Deletar
 	@Test
 	public void testeDelete() {
-		Optional<Consoles> consoles = interfaceSpringDataUser.findById(1l);
-		
-		interfaceSpringDataUser.delete(consoles.get());
+		Optional<Consoles> consoles = interfaceConsoles.findById(2l);
+
+		interfaceConsoles.delete(consoles.get());
 	}
-	
-	
-	//Consulta por nome Query
+
+	// Consulta por nome Query
 	@Test
 	public void testeConsultaNome() {
-		List<Consoles> list = interfaceSpringDataUser.buscaPorConsole("Super Nintendo");
-		
-		for(Consoles consoles :list){
+		List<Consoles> list = interfaceConsoles.buscaPorConsole("Super Nintendo");
+
+		for (Consoles consoles : list) {
 			System.out.println(consoles.getConsole());
 			System.out.println(consoles.getFabricante());
 			System.out.println(consoles.getGeracao());
@@ -92,16 +96,15 @@ public class AppSpringDataTest {
 			System.out.println(consoles.getTipoMidia());
 			System.out.println(consoles.getId());
 			System.out.println("------------------");
-			}
 		}
-	
+	}
 
-	//Consulta Query e parametros
-	
+	// Consulta Query e parametros
+
 	@Test
 	public void testeConsultaNomeParam() {
-		Consoles consoles = interfaceSpringDataUser.buscaPorConsoleParam("Super");
-		
+		Consoles consoles = interfaceConsoles.buscaPorConsoleParam("Super");
+
 		System.out.println(consoles.getConsole());
 		System.out.println(consoles.getFabricante());
 		System.out.println(consoles.getGeracao());
@@ -110,17 +113,56 @@ public class AppSpringDataTest {
 		System.out.println(consoles.getId());
 		System.out.println("------------------");
 	}
-	
-	
-	//deletar por condição metodo @modYfing e @transaction
+
+	// deletar por condição metodo @modYfing e @transaction
 	@Test
 	public void testeDeletePorLancamento() {
-		interfaceSpringDataUser.deletePorLancamento("1992");
+		interfaceConsoles.deletePorLancamento("1992");
 	}
-	
-	//update por condição atualizar lancamento se console chamar.
+
+	// update por condição atualizar lancamento se console chamar.
 	@Test
 	public void testeUpdateFabricantePorConsole() {
-		interfaceSpringDataUser.updateLancamentoPorConsole("1990", "Super Nintendo");
+		interfaceConsoles.updateLancamentoPorConsole("1990", "Super Nintendo");
 	}
+
+	// --------------------Gravar a consultar classe
+	// Games------------------------------
+	@Test
+	public void testeGravaGames() {
+
+		Optional<Consoles> consoles = interfaceConsoles.findById(7l);
+
+		Games games = new Games();
+		games.setAno("1996");
+		games.setGenero("Luta");
+		games.setAjogo("Mortal ultimate");
+		games.setProdutora("Midway");
+		games.setConsoles(consoles.get());
+
+		interfaceGames.save(games);
+	}
+
+	@Test
+		public void testeConsultarGames() {
+
+			Optional<Consoles> consoles = interfaceConsoles.findById(7L);
+
+			System.out.println(consoles.get().getConsole());
+			System.out.println(consoles.get().getFabricante());
+			System.out.println(consoles.get().getGeracao());
+			System.out.println(consoles.get().getLancamento());
+			System.out.println(consoles.get().getTipoMidia());
+			System.out.println(consoles.get().getId());
+			
+			for (Games games : consoles.get().getGames()) {
+				System.out.println(games.getAjogo());
+				System.out.println(games.getGenero());
+				System.out.println(games.getProdutora());
+				System.out.println(games.getAno());
+				System.out.println(games.getConsoles().getConsole());
+				System.out.println("----------------------------");
+			} 
+		}
+
 }

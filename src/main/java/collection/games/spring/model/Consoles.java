@@ -1,9 +1,15 @@
 package collection.games.spring.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.hibernate.type.TrueFalseType;
 
 @Entity
 public class Consoles {
@@ -18,8 +24,17 @@ public class Consoles {
 	private String tipoMidia;
 	private String geracao;
 	
+	@OneToMany(mappedBy = "consoles", orphanRemoval = true , fetch = FetchType.EAGER)
+	private List<Games>games;
 	
 	
+	
+	public List<Games> getGames() {
+		return games;
+	}
+	public void setGames(List<Games> games) {
+		this.games = games;
+	}
 	public Long getId() {
 		return id;
 	}

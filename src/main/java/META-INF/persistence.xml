@@ -6,6 +6,7 @@
 	<persistence-unit name="collection-games-spring">
 
 		<class>collection.games.spring.model.Consoles</class>
+		<class>collection.games.spring.model.Games</class>
 
 	</persistence-unit>
 </persistence>

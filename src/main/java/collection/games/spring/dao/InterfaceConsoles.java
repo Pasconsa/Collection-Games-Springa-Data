@@ -2,6 +2,9 @@ package collection.games.spring.dao;
 
 import java.util.List;
 
+import javax.persistence.LockModeType;
+
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -12,13 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import collection.games.spring.model.Consoles;
 
 @Repository
-public interface InterfaceSpringDataUser extends CrudRepository<Consoles, Long> {
+public interface InterfaceConsoles extends CrudRepository<Consoles, Long> {
 	
 	//Consulta Query
 	@Query(value = "select p from Consoles p where p.console like %?1%")
 	public List<Consoles> buscaPorConsole( String nome);
 	
 	//Consulta Query por parametro
+	@Lock(LockModeType.READ)   // bloqueio de leitura exp atualizar e pesquisar ao mesmo tempo usuarios diferentes
 	@Query(value = "select p from Consoles p where p.console = : paraconsole") //Colocar JPQL
 	public Consoles buscaPorConsoleParam(@Param("paraconsole")String paraconsole);
 	
